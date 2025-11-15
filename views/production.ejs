@@ -1,0 +1,80 @@
+<%- include('partials/header') %>
+
+<h2>Production Manager Dashboard</h2>
+
+<% if (error) { %>
+    <p class="error"><%= error %></p>
+<% } %>
+<% if (success) { %>
+    <p class="success"><%= success %></p>
+<% } %>
+
+<div class="grid-container">
+    <section class="card">
+        <h3>Produce Medicine Batch</h3>
+        <p>This will run a database transaction (Unit 5).</p>
+        <form action="/production/produce" method="POST" class="simple-form">
+            <div class="form-group">
+                <label for="medicine_id">Medicine</label>
+                <select id="medicine_id" name="medicine_id">
+                    <% medicines.forEach(med => { %>
+                        <option value="<%= med.medicine_id %>"><%= med.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity to Produce (units)</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            <button type="submit">Start Production</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Chemical Stock (Read-Only)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Chemical Name</th>
+                    <th>Total Stock (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% stock.forEach(item => { %>
+                    <tr>
+                        <td><%= item.chemical_name %></td>
+                        <td><%= item.total_quantity_in_stock_kg %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<section class="card">
+    <h3>Production Log</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Log ID</th>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Cost per Unit (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% logs.forEach(log => { %>
+                <tr>
+                    <td><%= log.log_id %></td>
+                    <td><%= medicines.find(m => m.medicine_id === log.medicine_id).name %></td>
+                    <td><%= log.quantity_produced %></td>
+                    <td><%= new Date(log.production_date).toLocaleString() %></td>
+                    <td><%= log.calculated_cost_per_unit_inr %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<%- include('partials/footer') %>

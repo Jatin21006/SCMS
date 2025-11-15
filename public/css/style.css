@@ -1,0 +1,174 @@
+/* --- Global & Variables --- */
+:root {
+    --primary-color: #0052cc;
+    --light-gray: #f4f5f7;
+    --dark-gray: #333;
+    --border-color: #ddd;
+    --shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* --- Navigation --- */
+nav {
+    background-color: #fff;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+nav h1 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.5rem;
+}
+nav .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+nav a:hover {
+    background-color: var(--light-gray);
+}
+
+/* --- Cards & Sections --- */
+.card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+.card h2, .card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* --- Tables (For Data Display) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+tbody tr:nth-child(even) {
+    background-color: var(--light-gray);
+}
+
+/* --- Forms (For Data Entry) --- */
+.simple-form .form-group {
+    margin-bottom: 15px;
+}
+.simple-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.simple-form input[type="text"],
+.simple-form input[type="number"],
+.simple-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-sizing: border-box; /* Important for width */
+}
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+}
+button:hover {
+    opacity: 0.9;
+}
+
+/* --- Login Page --- */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--primary-color);
+}
+.login-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 350px;
+    text-align: center;
+}
+.login-container h2 {
+    margin-top: 0;
+}
+.login-container .form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+.login-container button {
+    width: 100%;
+}
+.credentials {
+    margin-top: 20px;
+    background: var(--light-gray);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+.credentials h4 { margin: 0 0 10px 0;}
+.credentials p { margin: 5px 0; font-size: 0.9rem;}
+
+/* --- Misc --- */
+.error {
+    background-color: #ffebe6;
+    color: #c00;
+    padding: 10px;
+    border-radius: 5px;
+}
+.success {
+    background-color: #e6f7e6;
+    color: #006600;
+    padding: 10px;
+    border-radius: 5px;
+}

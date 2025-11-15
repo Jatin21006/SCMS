@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+<h2>Inventory Manager Dashboard</h2>
+
+<div class="grid-container">
+    <section class="card">
+        <h3>Add New Chemical Purchase</h3>
+        <form action="/inventory/add-purchase" method="POST" class="simple-form">
+            <div class="form-group">
+                <label for="chemical_id">Chemical</label>
+                <select id="chemical_id" name="chemical_id">
+                    <% chemicals.forEach(chem => { %>
+                        <option value="<%= chem.chemical_id %>"><%= chem.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="supplier_id">Supplier</label>
+                <select id="supplier_id" name="supplier_id">
+                    <% suppliers.forEach(sup => { %>
+                        <option value="<%= sup.supplier_id %>"><%= sup.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity (kg)</label>
+                <input type="number" step="0.01" id="quantity" name="quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price per kg (INR)</label>
+                <input type="number" step="0.01" id="price" name="price" required>
+            </div>
+            <button type="submit">Add Purchase</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Current Chemical Stock (From VIEW)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Chemical Name</th>
+                    <th>Total Stock (kg)</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% stock.forEach(item => { %>
+                    <tr>
+                        <td><%= item.chemical_name %></td>
+                        <td><%= item.total_quantity_in_stock_kg %></td>
+                        <td><%= new Date(item.last_updated).toLocaleString() %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<section class="card">
+    <h3>Chemical Purchase History (From VIEW)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Chemical</th>
+                <th>Supplier</th>
+                <th>Quantity (kg)</th>
+                <th>Price/kg (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% purchases.forEach(purchase => { %>
+                <tr>
+                    <td><%= new Date(purchase.purchase_date).toLocaleDateString() %></td>
+                    <td><%= purchase.chemical_name %></td>
+                    <td><%= purchase.supplier_name %></td>
+                    <td><%= purchase.quantity_kg %></td>
+                    <td><%= purchase.price_per_kg_inr %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,102 @@
+<%- include('partials/header') %>
+
+<h2>Admin Dashboard</h2>
+
+<section class="card">
+    <h3>Surplus Chemical Report (In Stock > 100kg, Not Used in 6 Months)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Chemical Name</th>
+                <th>Quantity in Stock (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% surplusReport.forEach(item => { %>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td><%= item.total_quantity_in_stock_kg %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<section class="card">
+    <h3>Profitability Dashboard (From VIEW)</h3>
+    <p>Shows calculated costs, 60% margin sale price, and 18% EBITDA target.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Medicine</th>
+                <th>Raw Cost (INR)</th>
+                <th>Sale Price (60% GM)</th>
+                <th>EBITDA (18%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% profitDashboard.forEach(item => { %>
+                <tr>
+                    <td><%= item.medicine_name %></td>
+                    <td><%= parseFloat(item.raw_material_cost_inr).toFixed(2) %></td>
+                    <td><%= parseFloat(item.selling_price_60_margin).toFixed(2) %></td>
+                    <td><%= parseFloat(item.ebitda_18_percent).toFixed(2) %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<section class="card">
+    <h3>All Production Logs</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Log ID</th>
+                <th>Medicine ID</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Cost per Unit (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% allLogs.forEach(log => { %>
+                <tr>
+                    <td><%= log.log_id %></td>
+                    <td><%= log.medicine_id %></td>
+                    <td><%= log.quantity_produced %></td>
+                    <td><%= new Date(log.production_date).toLocaleDateString() %></td>
+                    <td><%= log.calculated_cost_per_unit_inr %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<section class="card">
+    <h3>All Purchase Logs (From VIEW)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Chemical</th>
+                <th>Supplier</th>
+                <th>Quantity (kg)</th>
+                <th>Price/kg (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% allPurchases.forEach(purchase => { %>
+                <tr>
+                    <td><%= new Date(purchase.purchase_date).toLocaleDateString() %></td>
+                    <td><%= purchase.chemical_name %></td>
+                    <td><%= purchase.supplier_name %></td>
+                    <td><%= purchase.quantity_kg %></td>
+                    <td><%= purchase.price_per_kg_inr %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<%- include('partials/footer') %>

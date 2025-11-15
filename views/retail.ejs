@@ -1,0 +1,97 @@
+<%- include('partials/header') %>
+
+<h2>Retail Manager Dashboard</h2>
+
+<div class="grid-container">
+    <section class="card">
+        <h3>Create New Sales Order</h3>
+        <p>Selling price is auto-calculated for 60% Gross Margin.</p>
+        <form action="/retail/add-order" method="POST" class="simple-form">
+            <div class="form-group">
+                <label for="wholesaler_id">Wholesaler</label>
+                <select id="wholesaler_id" name="wholesaler_id">
+                    <% wholesalers.forEach(w => { %>
+                        <option value="<%= w.wholesaler_id %>"><%= w.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medicine_id">Medicine</label>
+                <select id="medicine_id" name="medicine_id">
+                    <% medicines.forEach(med => { %>
+                        <option value="<%= med.medicine_id %>"><%= med.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity (units)</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            <button type="submit">Create Order</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Finished Medicine Stock</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Stock on Hand</th>
+                    <th>Last Calculated Cost (INR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% medicineStock.forEach(item => { %>
+                    <tr>
+                        <td><%= medicines.find(m => m.medicine_id === item.medicine_id).name %></td>
+                        <td><%= item.quantity_in_stock %></td>
+                        <td><%= item.last_calculated_cost %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<section class="card">
+    <h3>All Sales Orders (From VIEW)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Wholesaler</th>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Price/Unit (INR)</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.forEach(order => { %>
+                <tr>
+                    <td><%= order.order_id %></td>
+                    <td><%= new Date(order.order_date).toLocaleDateString() %></td>
+                    <td><%= order.wholesaler_name %></td>
+                    <td><%= order.medicine_name %></td>
+                    <td><%= order.quantity %></td>
+                    <td><%= parseFloat(order.selling_price_per_unit_inr).toFixed(2) %></td>
+                    <td><%= order.status %></td>
+                    <td>
+                        <% if (order.status === 'pending') { %>
+                            <form action="/retail/ship-order/<%= order.order_id %>" method="POST">
+                                <button type="submit">Mark as Shipped</button>
+                            </form>
+                        <% } else { %>
+                            Shipped
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+
+<%- include('partials/footer') %>
